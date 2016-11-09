@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Andy Justice</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="shortcut icon" sizes="32x32" href="/images/shop-icon-32.png">
+    <meta name="theme-color" content="#fff">
+    <link rel="import" href="/src/portfolio-app.html" async>
+
+    <style>
+        body {
+          margin: 0;
+          font-family: 'Roboto', 'Noto', sans-serif;
+          font-size: 13px;
+          background: #161616;
+          line-height: 1.5;
+        }
+        .threeD{
+          position: absolute;
+          margin-top: 66px;
+          border-bottom: 1px solid black;
+          background: black;
+        }
+        /* styling for render while resources are loading */
+        portfolio-app[unresolved] {
+          display: block;
+          min-height: 101vh;
+          line-height: 68px;
+          text-align: center;
+          font-size: 16px;
+          font-weight: 600;
+          letter-spacing: 0.3em;
+          color: #202020;
+          padding: 0 16px;
+          overflow: visible;
+        }
+    </style>
+  </head>
+  <body>
+    <!-- Root Polymer Element -->
+    <portfolio-app unresolved></portfolio-app>
+
+    <!-- Lazy Load Polfills if needed -->
+    <script>
+      window.performance && performance.mark && performance.mark('index.html');
+
+      Polymer = {lazyRegister: true, dom: 'shadow'};
+
+      (function() {
+        if ('registerElement' in document
+            && 'import' in document.createElement('link')
+            && 'content' in document.createElement('template')) {
+          // platform is good!
+        } else {
+          // polyfill the platform!
+          var e = document.createElement('script');
+          e.src = '/bower_components/webcomponentsjs/webcomponents-lite.min.js';
+          document.body.appendChild(e);
+        }
+      })();
+    </script>
+  </body>
+</html>

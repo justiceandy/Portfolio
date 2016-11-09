@@ -1,0 +1,388 @@
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/effects/waterfall.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/app-layout/helpers/helpers.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/iron-media-query/iron-media-query.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+
+<!-- Since 'home' is the default route, eagerly load it. -->
+<link rel="import" href="portfolio-home.html">
+
+<dom-module id="portfolio-app">
+  <template>
+    <style>
+    :host {
+      flex: 1;
+      flex-direction: row;
+      --app-primary-color: #272b30;
+      --app-secondary-color: #757575;
+      --app-accent-color: #172C50;
+      --paper-button-ink-color: var(--app-accent-color);
+      --paper-icon-button-ink-color: var(--app-accent-color);
+      --paper-spinner-color: var(--app-accent-color);
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      color: var(--app-primary-color);
+    }
+    .logo{
+      padding-top: 12px;
+      font-size: 2em;
+      width: 100%;
+      max-width: 435px;
+      text-align: center;
+    }
+    app-toolbar{
+      background: white;
+    }
+    app-header {
+      @apply(--layout-fixed-top);
+      z-index: 1;
+      border-bottom:1px solid #bfbfbf;
+    }
+    .shadow{
+      box-shadow: inset 0px 5px 6px -3px rgba(0, 0, 0, 0.4);
+    }
+    .name{
+      font-family: 'Roboto', 'Noto', sans-serif;
+      margin-left: 7px;
+      margin-right: 7px;
+      font-size: 20px;
+    }
+    paper-icon-button {
+      color: var(--app-primary-color);
+    }
+    #header{
+      height: 65px;
+      color:white;
+      width: 100vw;
+      z-index: 10;
+      position: relative;
+      border-bottom: 1px solid #000000;
+      box-shadow: 1px 2px 5px #000000;
+    }
+    #header .tabContainer{
+      float: right;
+      position: absolute;
+      top: 5px;
+      right: 0;
+      width: 50%;
+      text-align: right;
+      max-width: 500px;
+    }
+    .title{
+      font-size:19px;
+    }
+    paper-tab{
+      font-size: 13px;
+      font-weight: normal;
+    }
+    #container{
+      width: 100vw;
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      align-content: stretch;
+      background-size: cover;
+      background: white;
+    }
+    .mugshot{
+      height: 110px;
+      width: 120px;
+      margin-left: 25%;
+      margin-top: 20px;
+      border-radius: 50%;
+    }
+    nav{
+      width: 22%;
+      display: flex;
+      flex-grow: 0;
+      flex-shrink: 10;
+      flex-basis: auto;
+      align-self: stretch;
+      min-width: 225px;
+
+    }
+    iron-pages{
+      width:100%;
+    }
+    footer{
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      margin: auto;
+      text-align: center;
+      min-height: 100px;
+    }
+    nav paper-material{
+      width: 220px;
+      margin: auto;
+      margin-top: 0;
+      background: white;
+      height: 500px;
+      border-radius: 5px;
+      margin-top: 20px;
+      border-top: 10px solid var(--app-primary-color);
+      border-bottom: 10px solid var(--app-primary-color);
+    }
+    .sidenav-content{
+      width: 100%;
+      padding-top: 14px;
+      float: left;
+      text-align: center;
+      text-decoration: none;
+      color:var(--app-primary-color);
+    }
+    main{
+      width: 100%;
+      display: flex;
+      flex-grow: 0;
+      flex-shrink: 1;
+      flex-basis: auto;
+      align-self: auto;
+      box-sizing: border-box;
+      padding: 20px;
+      padding-top: 0;
+    }
+    footer{
+      color:white;
+    }
+    </style>
+    <portfolio-analytics key="UA-39334307-16"></portfolio-analytics>
+    <!--
+      app-location and app-route elements provide the state of the URL for the app.
+    -->
+    <app-location route="{{route}}"></app-location>
+    <app-route
+        route="{{route}}"
+        pattern="/:page"
+        data="{{routeData}}"
+        tail="{{subroute}}"></app-route>
+
+    <iron-media-query query="max-width: 767px" query-matches="{{smallScreen}}"></iron-media-query>
+
+    <div id="header" class="shadow">
+        <div class="logo" main-title>
+          <span>{</span><span class="name">Andy Justice</span>}</span>
+          <span class="title">Full Stack Developer</span>
+        </div>
+        <div class="tabContainer">
+          <paper-tabs selected="0">
+            <paper-tab>Home</paper-tab>
+            <paper-tab>Projects</paper-tab>
+            <paper-tab>Contact</paper-tab>
+          </paper-tabs>
+        </div>
+    </div>
+    <section id="container">
+
+      <main>
+        <iron-pages role="main" selected="{{page}}" attr-for-selected="name" selected-attribute="visible">
+          <portfolio-home name="home"></portfolio-home>
+          <portfolio-about name="about"></portfolio-about>
+          <portfolio-projects name="projects"></portfolio-projects>
+          <portfolio-contact name="contact"></portfolio-contact>
+        </iron-pages>
+      </main>
+
+      <footer>
+        © 2016 Chillcapped Development
+      </footer>
+    </section>
+
+
+
+  </template>
+
+  <script>
+
+    // performance logging
+    window.performance && performance.mark && performance.mark('before register');
+
+    Polymer({
+      is: 'portfolio-app',
+      properties: {
+      page: {
+        type: String,
+        reflectToAttribute: true,
+        observer: '_pageChanged'
+      },
+
+      numItems: {
+        type: Number,
+        value: 0
+      },
+
+      _shouldShowTabs: {
+        computed: '_computeShouldShowTabs(page, smallScreen)'
+      },
+
+      _shouldRenderTabs: {
+        computed: '_computeShouldRenderTabs(_shouldShowTabs, loadComplete)'
+      },
+
+      _shouldRenderDrawer: {
+        computed: '_computeShouldRenderDrawer(false, loadComplete)'
+      }
+    },
+
+    observers: [
+      '_routePageChanged(routeData.page)'
+    ],
+
+    listeners: {
+      'add-cart-item': '_onAddCartItem',
+      'set-cart-item': '_onSetCartItem',
+      'clear-cart': '_onClearCart',
+      'change-section': '_onChangeSection',
+      'announce': '_onAnnounce',
+      'dom-change': '_domChange'
+    },
+
+    created: function() {
+      window.performance && performance.mark && performance.mark('created');
+      // Custom elements polyfill safe way to indicate an element has been upgraded.
+      this.removeAttribute('unresolved');
+    },
+
+    ready: function() {
+      // listen for online/offline
+      Polymer.RenderStatus.afterNextRender(this, function() {
+        this.listen(window, 'online', '_notifyNetworkStatus');
+        this.listen(window, 'offline', '_notifyNetworkStatus');
+      });
+    },
+
+    _routePageChanged: function(page) {
+      this.page = page || 'home';
+      // Scroll to the top of the page on every *route* change. Use `Polymer.AppLayout.scroll`
+      // with `behavior: 'silent'` to disable header scroll effects during the scroll.
+      Polymer.AppLayout.scroll({ top: 0, behavior: 'silent' });
+      // Close the drawer - in case the *route* change came from a link in the drawer.
+      this.drawerOpened = false;
+    },
+
+    _pageChanged: function(page, oldPage) {
+      console.log(page, oldPage);
+      if (page != null) {
+        // home route is eagerly loaded
+        if (page == 'home') {
+          this._pageLoaded(Boolean('home'));
+        // other routes are lazy loaded
+        } else {
+
+          if(page === 'c'){
+            page = 'category';
+          }
+          this.importHref(
+            this.resolveUrl('portfolio-' + page + '.html'),
+            function() {
+              this._pageLoaded(Boolean(oldPage));
+            }, null, true);
+        }
+      }
+    },
+
+    _pageLoaded: function(shouldResetLayout) {
+      this._ensureLazyLoaded();
+      if (shouldResetLayout) {
+        this.async(function() {
+          this.$.header.resetLayout();
+        }, 1);
+      }
+    },
+
+    _ensureLazyLoaded: function() {
+      // load lazy resources after render and set `loadComplete` when done.
+      if (!this.loadComplete) {
+        Polymer.RenderStatus.afterNextRender(this, function() {
+          this.importHref(this.resolveUrl('lazy-resources.html'), function() {
+            // Register service worker if supported.
+            if ('serviceWorker' in navigator) {
+              navigator.serviceWorker.register('/service-worker.js');
+            }
+            this._notifyNetworkStatus();
+            this.loadComplete = true;
+          });
+        });
+      }
+    },
+
+    _notifyNetworkStatus: function() {
+      var oldOffline = this.offline;
+      this.offline =  !navigator.onLine;
+      // Show the snackbar if the user is offline when starting a new session
+      // or if the network status changed.
+      if (this.offline || (!this.offline && oldOffline === true)) {
+        if (!this._networkSnackbar) {
+          //this._networkSnackbar = document.createElement('portfolio-snackbar');
+        //  Polymer.dom(this.root).appendChild(this._networkSnackbar);
+        }
+      //  Polymer.dom(this._networkSnackbar).innerHTML = this.offline ?
+        //    'You are offline' : 'You are online';
+      //  this._networkSnackbar.open();
+      }
+    },
+
+    _toggleDrawer: function() {
+      this.drawerOpened = !this.drawerOpened;
+    },
+
+    // Elements in the app can notify section changes.
+    // Response by a11y announcing the section and syncronizing the category.
+    _onChangeSection: function(event) {
+      var detail = event.detail;
+      this.categoryName = detail.category || '';
+      // Announce the page's title
+      if (detail.title) {
+        document.title = detail.title + ' - Andy Justice';
+        this._announce(detail.title + ', loaded');
+      }
+    },
+    // Elements in the app can notify a change to be a11y announced.
+    _onAnnounce: function(e) {
+      this._announce(e.detail);
+    },
+
+    // A11y announce the given message.
+    _announce: function(message) {
+      this._a11yLabel = '';
+      this.debounce('_a11yAnnouncer', function() {
+        this._a11yLabel = message;
+      }, 100);
+    },
+    // This is for performance logging only.
+    _domChange: function(e) {
+      if (window.performance && performance.mark && !this.__loggedDomChange) {
+        var target = Polymer.dom(e).rootTarget;
+        if (target.domHost.is.match(this.page)) {
+          this.__loggedDomChange = true;
+          performance.mark(target.domHost.is + '.domChange');
+        }
+      }
+    },
+
+    _computeShouldShowTabs: function(page, smallScreen) {
+      return !smallScreen;
+    },
+
+    _computeShouldRenderTabs: function(_shouldShowTabs, loadComplete) {
+      return _shouldShowTabs && loadComplete;
+    },
+
+    _computeShouldRenderDrawer: function(smallScreen, loadComplete) {
+      return smallScreen && loadComplete;
+    },
+
+    _computePluralizedQuantity: function(quantity) {
+      return quantity + ' ' + (quantity === 1 ? 'item' : 'items');
+    }
+    });
+  </script>
+</dom-module>
