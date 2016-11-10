@@ -1,0 +1,42 @@
+<dom-module id="portfolio-footer">
+  <style>
+    :host {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      margin: auto;
+      text-align: center;
+      min-height: 200px;
+      left: 0;
+      right: 0;
+    }
+    .wgtDiv{
+      color:grey;
+      float:left;
+      width:33%;
+      text-align: center;
+      box-sizing: border-box;
+      padding:10px;
+    }
+  </style>
+  <template>
+    <div class="aboutMe wgtDiv">
+      <portfolio-about widget="true"></portfolio-about>
+    </div>
+    <div class="recentPosts wgtDiv">
+      <portfolio-posts widget="true"></portfolio-posts>
+    </div>
+    <div class="recentTweets wgtDiv">
+      <portfolio-tweets widget="true"></portfolio-tweets>
+    </div>
+  </template>
+  <script>
+    Polymer({
+      is: "portfolio-footer",
+      properties: {
+
+      }
+    })
+
+  </script>
+</dom-module>

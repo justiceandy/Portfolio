@@ -5,12 +5,29 @@
     }
   </style>
   <template>
-    <h4>About Me</h4>
+
+    <template is="dom-if" if="[[this.widget]]">
+      <h4> About Me </h4>
+      <div class="abmInner">
+        <img src="" />
+        <p> Lorum Ipsum </p>
+      </div>
+    </template>
+
+    <template is="dom-if" if="[[!this.widget]]">
+
+    </template>
+
   </template>
   <script>
     Polymer({
       is: "portfolio-about",
       properties: {
+        widget: {
+          type: String,
+          notify: true,
+          value: false
+        }
 
       }
     })

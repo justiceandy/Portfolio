@@ -18,13 +18,14 @@
         font-family: roboto;
         width: 100%;
         text-align: center;
+        margin-top: 46px;
       }
       .skillIcon{
-
         position: relative;
         cursor: pointer;
         margin-right: 13px;
         margin-bottom: 30px;
+        margin-left: 13px;
       }
       .skillIcon.small{
         height: 50px;
@@ -55,11 +56,18 @@
         width: 125px;
         height: 80px;
       }
+      .portButton{
+        background: #a42122;
+        padding: 10px;
+        border-radius: 5px;
+        text-decoration: none;
+        color: white;
+        width: 200px;
+        display: inline-block;
+        border: 1px solid #701e1f;
+        box-shadow: 1px 2px 5px #a1a1a1;
+      }
   </style>
-
-    <div class="mainInfo">
-  		<p>Click Icons to see skill set and previous projects</p>
-  	</div>
 
   	<div class="skillsContainer">
   		<div class="skillsInner">
@@ -69,6 +77,10 @@
           </template>
   			</div>
   		</div>
+  	</div>
+
+    <div class="mainInfo">
+  		<a href="/portfolio" class="portButton">View Porfolio</a>
   	</div>
 
   </template>
@@ -91,9 +103,7 @@
             {image: '/images/svgs/gitlab.svg', imageType: 'small', skill: 'Gitlab', level: 1},
             {image: '/images/svgs/docker.svg', imageType: 'small', skill: 'Docker', level: 1},
             {image: '/images/svgs/tux.svg', imageType: 'small', skill: 'Tux', level: 1},
-            {image: '/images/svgs/windows.svg', imageType: 'small', skill: 'Windows', level: 1},
-            {image: '/images/svgs/mysql.svg', imageType: 'large', skill: 'MySql', level: 1},
-            {image: '/images/svgs/mongodb.svg', imageType: 'large', skill: 'MongoDB', level: 1}
+            {image: '/images/svgs/windows.svg', imageType: 'small', skill: 'Windows', level: 1}
           ]
         }
       },
@@ -105,6 +115,7 @@
         return this.skills[index].imageType + ' skillIcon';
       },
       ready: function(){
+        if(this.route === 'home'){
         // Three JS Code Executes after Polymer Element
         var camera, tick = 0,
           scene, renderer, clock = new THREE.Clock(true),
@@ -115,7 +126,7 @@
           container = document.createElement('div');
           container.className += "threeD";
           document.body.prepend(container);
-          camera = new THREE.PerspectiveCamera(28, window.innerWidth / window.innerHeight, 1, 10000);
+          camera = new THREE.PerspectiveCamera(28, window.innerWidth / 500, 1, 10000);
           camera.position.z = 50;
           scene = new THREE.Scene();
           // The GPU Particle system extends THREE.Object3D, and so you can use it
@@ -147,7 +158,7 @@
           }
           renderer = new THREE.WebGLRenderer();
           renderer.setPixelRatio(window.devicePixelRatio);
-          renderer.setSize(window.innerWidth, window.innerHeight);
+          renderer.setSize(window.innerWidth, 500);
           container.appendChild(renderer.domElement);
           // setup controls
           controls = new THREE.TrackballControls(camera, renderer.domElement);
@@ -159,9 +170,9 @@
           window.addEventListener('resize', onWindowResize, false);
         }
         function onWindowResize() {
-          camera.aspect = window.innerWidth / window.innerHeight;
+          camera.aspect = window.innerWidth / 500;
           camera.updateProjectionMatrix();
-          renderer.setSize(window.innerWidth, window.innerHeight);
+          renderer.setSize(window.innerWidth, 500);
         }
         function animate() {
           requestAnimationFrame(animate);
@@ -184,6 +195,7 @@
         }
         function render() {
           renderer.render(scene, camera);
+        }
         }
       }
     })

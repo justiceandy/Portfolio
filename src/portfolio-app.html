@@ -58,9 +58,10 @@
     }
     #header{
       height: 65px;
-      color:white;
+      color: white;
       width: 100vw;
       z-index: 10;
+      background: #1c1c1c;
       position: relative;
       border-bottom: 1px solid #000000;
       box-shadow: 1px 2px 5px #000000;
@@ -112,14 +113,7 @@
     iron-pages{
       width:100%;
     }
-    footer{
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      margin: auto;
-      text-align: center;
-      min-height: 100px;
-    }
+
     nav paper-material{
       width: 220px;
       margin: auto;
@@ -175,6 +169,7 @@
         <div class="tabContainer">
           <paper-tabs selected="0">
             <paper-tab>Home</paper-tab>
+            <paper-tab>Blog</paper-tab>
             <paper-tab>Projects</paper-tab>
             <paper-tab>Contact</paper-tab>
           </paper-tabs>
@@ -191,9 +186,9 @@
         </iron-pages>
       </main>
 
-      <footer>
-        © 2016 Chillcapped Development
-      </footer>
+
+      <portfolio-footer></portfolio-footer>
+
     </section>
 
 
